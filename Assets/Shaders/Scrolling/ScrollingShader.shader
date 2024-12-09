@@ -42,7 +42,7 @@ Shader "Ethan/ScrollingShader"
 
                 // Scale UVs and apply sine transformation
                 o.uv = IN.uv;
-                o.uv.x += _ScrollUVX * sin(_Time.x); // Scale and apply sine on X
+                o.uv.x += _ScrollUVX * _Time.x; // Scroll over time
 
                 return o;
             }
