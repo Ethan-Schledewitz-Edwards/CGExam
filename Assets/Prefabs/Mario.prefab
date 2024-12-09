@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1788156522270646768}
   - component: {fileID: 2147584949258773848}
   - component: {fileID: 1707459461597322418}
+  - component: {fileID: 1925043866553333989}
   m_Layer: 3
   m_Name: Mario
   m_TagString: Untagged
@@ -64,9 +65,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 9054928168843377129, guid: 0324d683f25ed88409a9d6245e304a65, type: 3}
-  - {fileID: -640063867121917104, guid: 0324d683f25ed88409a9d6245e304a65, type: 3}
-  - {fileID: 4835078630258379571, guid: 0324d683f25ed88409a9d6245e304a65, type: 3}
+  - {fileID: 2100000, guid: 217e4462d1b0208498836980321fd245, type: 2}
+  - {fileID: 2100000, guid: 5d0e738c640249e4183f85b47c7e498f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -88,3 +88,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1925043866553333989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4253029731252520246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 252d50d44b297404b88b77bb58034c8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normal: {fileID: 2100000, guid: 5d0e738c640249e4183f85b47c7e498f, type: 2}
+  PBalloon: {fileID: 2100000, guid: 217e4462d1b0208498836980321fd245, type: 2}
+  Hologram: {fileID: 2100000, guid: 3e0ed2e3d84d27e48904d16ad41faaf5, type: 2}
+  meshRenderer: {fileID: 1707459461597322418}
