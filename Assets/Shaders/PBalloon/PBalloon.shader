@@ -3,10 +3,9 @@ Shader "Ethan/PBalloon"
     Properties
     {
         _MainTex("Texture", 2D) = "white" {}
-        _Color("Color", Color) = (1,1,1,1)
         _SpecularColor("Specular Color", Color) = (1,1,1,1)
         _Shininess("Shininess", Range(1, 200)) = 50
-        _Amount ("Extrude", Range(0.0,1)) = 0.001
+        _Balloon ("Extrude", Range(0.0,1)) = 0.001
     }
 
     SubShader
@@ -40,17 +39,16 @@ Shader "Ethan/PBalloon"
 
             TEXTURE2D(_MainTex);
             SAMPLER(sampler_MainTex);
-            float4 _Color;
             float4 _SpecularColor;
             float _Shininess;
-            float _Amount;
+            float _Balloon;
 
             Varyings vert(Attributes IN)
             {
                 Varyings OUT;
 
                 // Extrude the vertex position along its normal
-                float3 extrudedPosition = IN.positionOS.xyz + IN.normalOS * _Amount;
+                float3 extrudedPosition = IN.positionOS.xyz + IN.normalOS * _Balloon;
 
                 OUT.positionHCS = TransformObjectToHClip(extrudedPosition);
 
@@ -70,24 +68,28 @@ Shader "Ethan/PBalloon"
                 // Normalize the world space normal
                 half3 normalWS = normalize(IN.normalWS);
 
-                // Calculate ambient lighting
-                half3 ambientSH = SampleSH(normalWS);
-
                 // Diffuse Lighting
                 half3 viewDir = normalize(IN.viewDirWS);
                 half3 halfDir = normalize(lightDir + viewDir);
                 half NdotL = saturate(dot(normalWS, lightDir));
-                half specular = pow(NdotH, _Shininess);// Shininess factor
+                half NdotH = saturate(dot(normalWS, halfDir));
+
+
+                // Specular 
+                half specular = pow(NdotH, _Shininess);
+                half3 specularColor = _SpecularColor.rgb * specular * mainLight.color;
 
                 // Combine specular and diffuse components
-                half3 diffuse = _Color.rgb * NdotL * mainLight.color;
-                half3 specularColor = _SpecularColor.rgb * specular * mainLight.color;
+                half3 diffuse = NdotL * mainLight.color;
+
+                // Calculate ambient lighting
+                half3 ambient = SampleSH(normalWS);
 
                 // Sample the Texture
                 half3 texColor = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, IN.uv).rgb;
 
                 // Final COLOR
-                half3 finalColor = texColor * (diffuse + specularColor + ambientSH);
+                half3 finalColor = texColor * (diffuse + specularColor + ambient);
 
                 return half4(finalColor, 1.0);
             }
